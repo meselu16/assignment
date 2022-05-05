@@ -1,0 +1,29 @@
+const axios = require('axios');
+const express = require('express');
+const app = express(),
+cors = require('cors');
+const cheerio = require('cheerio')
+app.use(cors());
+const port = process.env.PORT || 3000;
+
+
+app.get('/:id', function(req, res) {
+
+    let url = `https://pubmed.ncbi.nlm.nih.gov/`+req.params.id;
+
+    axios({
+        method:'get',
+        url
+    })
+    .then(function (response) {
+      //const value = JSON.stringify(response);
+      const $ = cheerio.load(response.data);
+      const resp = $('#enc-abstract').text();
+      res.send({abstract: resp});
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+});
+
+var server = app.listen(port);

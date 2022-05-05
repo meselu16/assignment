@@ -1,0 +1,9 @@
+<!-- Resources -->
+<h2>External Article</h2>
+<div *ngIf="articles != undefined">
+  <ul class="articles">
+   <li *ngFor="let article of articles">
+     <a [routerLink]="['/article', article.id]"  class="badge">{{article.id}}</a>
+   </li>
+</ul>
+</div>
